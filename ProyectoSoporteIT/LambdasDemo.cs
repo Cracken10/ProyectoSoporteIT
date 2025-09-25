@@ -37,5 +37,18 @@ namespace ProyectoSoporteIT
             string MetodoFunc(Func<int, string> param) { return param(5); }
             Console.WriteLine(MetodoFunc(func1));
         }
+        public delegate void MiDelegate4(int i, string s, bool b, double d);
+        public delegate string MiFunc1(int i);
+        public static void DemoDelegate()
+        {
+            MiDelegate4 del4 = (i, s, b, d) => Console.WriteLine($"Delegate4: {i}, {s}, {b}, {d}");
+            del4(1, "test", true, 2.0);
+            Action<int, string, bool, double> accion = (i, s, b, d) => Console.WriteLine($"Action en delegate: {i}, {s}, {b}, {d}");
+            del4 += new MiDelegate4(accion.Invoke); 
+            del4(2, "test2", false, 3.0);
+            MiFunc1 funcDel = new Func<int, string>(i => $"Func en delegate: {i}").Invoke;
+            Console.WriteLine(funcDel(10));
+        }
+
     }
 }
