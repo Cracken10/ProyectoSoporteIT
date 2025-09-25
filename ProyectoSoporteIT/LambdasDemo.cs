@@ -1,5 +1,4 @@
-﻿using System;
-namespace ProyectoSoporteIT
+﻿namespace ProyectoSoporteIT
 {
     public static class LambdasDemo
     {
@@ -50,7 +49,7 @@ namespace ProyectoSoporteIT
             MiDelegate4 del4 = (i, s, b, d) => Console.WriteLine($"Delegate4: {i}, {s}, {b}, {d}");
             del4(1, "test", true, 2.0);
             Action<int, string, bool, double> accion = (i, s, b, d) => Console.WriteLine($"Action en delegate: {i}, {s}, {b}, {d}");
-            del4 += new MiDelegate4(accion.Invoke); 
+            del4 += new MiDelegate4(accion.Invoke);
             del4(2, "test2", false, 3.0);
             MiFunc1 funcDel = new Func<int, string>(i => $"Func en delegate: {i}").Invoke;
             Console.WriteLine(funcDel(10));
@@ -67,4 +66,5 @@ namespace ProyectoSoporteIT
             Console.WriteLine($"Numero D2: {numero}");
         }
     }
+
 }

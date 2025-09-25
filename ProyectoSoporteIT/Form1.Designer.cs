@@ -33,8 +33,7 @@
             button3 = new Button();
             button4 = new Button();
             button5 = new Button();
-            dataGridView1 = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            button6 = new Button();
             SuspendLayout();
             // 
             // button1
@@ -63,7 +62,7 @@
             button3.Name = "button3";
             button3.Size = new Size(205, 29);
             button3.TabIndex = 2;
-            button3.Text = "DemoFunc";
+            button3.Text = "Demo Func";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
@@ -73,45 +72,44 @@
             button4.Name = "button4";
             button4.Size = new Size(205, 29);
             button4.TabIndex = 3;
-            button4.Text = "DemoDelegate";
+            button4.Text = "Demo Delegate";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
             // button5
             // 
-            button5.Location = new Point(12, 183);
+            button5.Location = new Point(12, 184);
             button5.Name = "button5";
-            button5.Size = new Size(205, 45);
+            button5.Size = new Size(205, 30);
             button5.TabIndex = 4;
             button5.Text = "Tiempo Formato";
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
             // 
-            // dataGridView1
+            // button6
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(336, 40);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(300, 188);
-            dataGridView1.TabIndex = 5;
-            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            button6.Location = new Point(12, 220);
+            button6.Name = "button6";
+            button6.Size = new Size(205, 36);
+            button6.TabIndex = 5;
+            button6.Text = "Ejemplos Atributos";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1187, 682);
-            Controls.Add(dataGridView1);
+            ClientSize = new Size(357, 353);
+            Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Capacitacion";
             Load += Form1_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -123,5 +121,7 @@
         private Button button4;
         private Button button5;
         private DataGridView dataGridView1;
+        private DateTimePicker dateTimePicker1;
+        private Button button6;
     }
 }
