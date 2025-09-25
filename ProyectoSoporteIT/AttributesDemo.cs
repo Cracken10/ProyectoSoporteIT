@@ -32,14 +32,23 @@ namespace ProyectoSoporteIT
         public int MaxLength => maxLength;
     }
 
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    public class ModuleInitializerAttribute : Attribute
+    {
+        public ModuleInitializerAttribute() { }
+    }
 
     [Author("Aldo Casas", Version = 2.0)]
     public class Documento
     {
-        [MaxLength(45)]
+        [MaxLength(50)]
         public string Nombre { get; set; }
 
-
+        [ModuleInitializer]
+        public static void InitializeServices()
+        {
+            Console.WriteLine("Servicios inicializados.");
+        }
     }
 
     public static class AttributesDemo
@@ -62,6 +71,14 @@ namespace ProyectoSoporteIT
                 Console.WriteLine($"MaxLength de Nombre: {maxLengthAttr.MaxLength}");
             }
 
+            // Demostrar atributo ModuleInitializer en método InitializeServices
+            var method = type.GetMethod("InitializeServices");
+            var initAttr = (ModuleInitializerAttribute)Attribute.GetCustomAttribute(method, typeof(ModuleInitializerAttribute));
+            if (initAttr != null)
+            {
+                Console.WriteLine("InitializeServices marcado como ModuleInitializer.");
+                method.Invoke(null, null); // Ejecutar el método estático
+            }
 
             // Mostrar mensaje en MessageBox
             MessageBox.Show("Atributos ejecutados.");
