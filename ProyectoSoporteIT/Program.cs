@@ -10,19 +10,19 @@ namespace ProyectoSoporteIT
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-            LambdasDemo.DemoLambdas();
-            LambdasDemo.DemoAction();
-            LambdasDemo.DemoFunc();
-            LambdasDemo.DemoDelegate();
-            DataDemo.DemoDataTable();
-            DataDemo.DemoDataSet();
-            DataDemo.DemoLinq();
-            AdvancedDemo.DemoReflection();
-            AdvancedDemo.DemoExtensionMethods();
-            AdvancedDemo.DemoNullable();
-            AdvancedDemo.DemoConstructors();
-            AdvancedDemo.DemoMethodImpl();
-            SingletonDemo.DemoJson();
+            //LambdasDemo.DemoLambdas();
+            //LambdasDemo.DemoAction();
+            //LambdasDemo.DemoFunc();
+            //LambdasDemo.DemoDelegate();
+           // DataDemo.DemoDataTable();
+           // DataDemo.DemoDataSet();
+           // DataDemo.DemoLinq();
+           // AdvancedDemo.DemoReflection();
+           // AdvancedDemo.DemoExtensionMethods();
+          ///  AdvancedDemo.DemoNullable();
+          //  AdvancedDemo.DemoConstructors();
+          ///  AdvancedDemo.DemoMethodImpl();
+          ///  SingletonDemo.DemoJson();
         }
     }
 }
