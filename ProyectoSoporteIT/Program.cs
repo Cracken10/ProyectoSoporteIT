@@ -4,7 +4,7 @@ namespace ProyectoSoporteIT
     {
         /// <summary>  
         ///  The main entry point for the application.
-        /// </summary>
+        /// </summaryxx>
         [STAThread]
         static void Main()
         {
