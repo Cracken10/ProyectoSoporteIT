@@ -7,6 +7,8 @@ namespace ProyectoSoporteIT
         [STAThread]
         static void Main()
         {
+            LambdasDemo.DemoLambdas();
+            LambdasDemo.DemoAction();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
