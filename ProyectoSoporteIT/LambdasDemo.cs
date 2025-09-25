@@ -24,5 +24,18 @@ namespace ProyectoSoporteIT
             void MetodoAccion(Action<int> param) { param(5); }
             MetodoAccion(accion1);
         }
+        public static void DemoFunc()
+        {
+            Func<int, string, bool, double, string> func4 = (i, s, b, d) => $"Func4: {i}, {s}, {b}, {d}";
+            Func<int, string, bool, int> func3 = (i, s, b) => i;
+            Func<int, string, string> func2 = (i, s) => s;
+            Func<int, string> func1 = i => $"Func1: {i}";
+            Console.WriteLine(func4(1, "test", true, 2.0));
+            Console.WriteLine(func3(1, "test", true));
+            Console.WriteLine(func2(1, "test"));
+            Console.WriteLine(func1(1));
+            string MetodoFunc(Func<int, string> param) { return param(5); }
+            Console.WriteLine(MetodoFunc(func1));
+        }
     }
 }

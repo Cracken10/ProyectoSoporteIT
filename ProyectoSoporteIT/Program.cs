@@ -9,6 +9,7 @@ namespace ProyectoSoporteIT
         {
             LambdasDemo.DemoLambdas();
             LambdasDemo.DemoAction();
+            LambdasDemo.DemoFunc();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
