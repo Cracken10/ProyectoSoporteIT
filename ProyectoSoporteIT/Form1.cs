@@ -10,7 +10,7 @@ namespace ProyectoSoporteIT
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-          
+
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -31,6 +31,18 @@ namespace ProyectoSoporteIT
         {
             LambdasDemo.DemoDelegate();
             MessageBox.Show("Delegate ejecutado.");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            LambdasDemo.DemoStringFormat();
+            MessageBox.Show("Tiempo formatos ejecutado.");
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

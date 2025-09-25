@@ -10,7 +10,7 @@ namespace ProyectoSoporteIT
             Func<dynamic> returnLambda = () => new { Prop = "Valor" };
             var resultado = returnLambda();
             Console.WriteLine($"Lambda retorno: {resultado.Prop}");
-            MessageBox.Show("Lambdas Entro. ");
+            MessageBox.Show("Lambdas Entro.");
 
         }
         public static void DemoAction()
@@ -57,6 +57,14 @@ namespace ProyectoSoporteIT
             MessageBox.Show("Delegate Entro. ");
 
         }
-
+        public static void DemoStringFormat()
+        {
+            string formatted = string.Format("Texto {0} {1}", "Hola", 123);
+            Console.WriteLine(formatted);
+            string fecha = string.Format("{0:yyyy.MM/dd HH:mm}", DateTime.Now);
+            Console.WriteLine($"Fecha: {fecha}");
+            string numero = string.Format("{0:D2}", 5);
+            Console.WriteLine($"Numero D2: {numero}");
+        }
     }
 }
