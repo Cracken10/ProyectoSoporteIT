@@ -5,6 +5,7 @@ namespace ProyectoSoporteIT
         /// <summary>  
         ///  The main entry point for the application.
         /// </summary>
+        /// /// Prueba de commit
         [STAThread]
         static void Main()
         {
