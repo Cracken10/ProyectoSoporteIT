@@ -15,22 +15,22 @@ namespace ProyectoSoporteIT
         private void button1_Click(object sender, EventArgs e)
         {
             LambdasDemo.DemoLambdas();
-            MessageBox.Show("Lambdas ejecutadas. Revisa la consola (Vista > Output).");
+            MessageBox.Show("Lambdas ejecutadas. ");
         }
         private void button2_Click(object sender, EventArgs e)
         {
             LambdasDemo.DemoAction();
-            MessageBox.Show("Action ejecutada. Revisa la consola (Vista > Output).");
+            MessageBox.Show("Action ejecutada.");
         }
         private void button3_Click(object sender, EventArgs e)
         {
             LambdasDemo.DemoFunc();
-            MessageBox.Show("Func ejecutada. Revisa la consola (Vista > Output).");
+            MessageBox.Show("Func ejecutada.");
         }
         private void button4_Click(object sender, EventArgs e)
         {
             LambdasDemo.DemoDelegate();
-            MessageBox.Show("Delegate ejecutado. Revisa la consola (Vista > Output).");
+            MessageBox.Show("Delegate ejecutado.");
         }
     }
 }

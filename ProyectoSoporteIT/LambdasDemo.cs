@@ -10,6 +10,8 @@ namespace ProyectoSoporteIT
             Func<dynamic> returnLambda = () => new { Prop = "Valor" };
             var resultado = returnLambda();
             Console.WriteLine($"Lambda retorno: {resultado.Prop}");
+            MessageBox.Show("Lambdas Entro. ");
+
         }
         public static void DemoAction()
         {
@@ -23,6 +25,8 @@ namespace ProyectoSoporteIT
             accion1(1);
             void MetodoAccion(Action<int> param) { param(5); }
             MetodoAccion(accion1);
+            MessageBox.Show("Action Entro. ");
+
         }
         public static void DemoFunc()
         {
@@ -36,6 +40,8 @@ namespace ProyectoSoporteIT
             Console.WriteLine(func1(1));
             string MetodoFunc(Func<int, string> param) { return param(5); }
             Console.WriteLine(MetodoFunc(func1));
+            MessageBox.Show("Func Entro. ");
+
         }
         public delegate void MiDelegate4(int i, string s, bool b, double d);
         public delegate string MiFunc1(int i);
@@ -48,6 +54,8 @@ namespace ProyectoSoporteIT
             del4(2, "test2", false, 3.0);
             MiFunc1 funcDel = new Func<int, string>(i => $"Func en delegate: {i}").Invoke;
             Console.WriteLine(funcDel(10));
+            MessageBox.Show("Delegate Entro. ");
+
         }
 
     }
