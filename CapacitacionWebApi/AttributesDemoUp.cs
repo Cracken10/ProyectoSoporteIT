@@ -1,67 +1,64 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System;
 
-namespace CapacitacionWebApi
+namespace CapacitacionWebApi;
+
+[AttributeUsage(AttributeTargets.Class)]
+public sealed class EmployeeAttribute(string id, string department) : Attribute
 {
-    // Nuevo atributo para la información del empleado
-    [AttributeUsage(AttributeTargets.Class)]
-    public class EmployeeAttribute : Attribute
+    public string EmployeeId { get; } = id;
+    public string Department { get; } = department;
+}
+
+[AttributeUsage(AttributeTargets.Method)]
+public sealed class HrMethodAttribute : Attribute;
+
+[Employee("EMP-001", "Desarrollo")]
+public class Empleado
+{
+    [Required, StringLength(100)]
+    public string NombreCompleto { get; set; } = string.Empty;
+
+    [HrMethod]
+    public void PerformHrReview(ILogger logger) =>
+        logger.LogInformation("Revisión de RH realizada para el empleado.");
+}
+
+public static class AttributesDemo
+{
+    public static string DemoAttributes(ILogger logger)
     {
-        public string EmployeeId { get; }
-        public string Department { get; }
-        public EmployeeAttribute(string id, string department)
+        var type = typeof(Empleado);
+        var empleado = new Empleado();
+        var logMessages = new System.Text.StringBuilder();
+
+        // 1. Mensaje de atributo de empleado
+        var employeeAttr = type.GetCustomAttribute<EmployeeAttribute>();
+        var employeeMessage = employeeAttr is not null ? $"ID: {employeeAttr.EmployeeId}, Depto: {employeeAttr.Department}" : "Sin Employee attribute";
+        logMessages.AppendLine($"employeeMessage: {employeeMessage}");
+
+        // 2. Mensaje de atributo de longitud de cadena
+        var stringLengthAttr = type.GetProperty(nameof(Empleado.NombreCompleto))?.GetCustomAttribute<StringLengthAttribute>();
+        var stringLengthMessage = stringLengthAttr is not null ? $"StringLength de NombreCompleto: {stringLengthAttr.MaximumLength}" : "Sin StringLength attribute";
+        logMessages.AppendLine($"stringLengthMessage: {stringLengthMessage}");
+
+        // 3. Mensaje y ejecución de método HR
+        var method = type.GetMethod(nameof(Empleado.PerformHrReview));
+        var hrMethodAttr = method?.GetCustomAttribute<HrMethodAttribute>();
+        var hrMessage = hrMethodAttr is not null ? "PerformHrReview marcado y ejecutado." : "PerformHrReview no marcado.";
+
+        if (hrMethodAttr is not null && method is not null)
         {
-            EmployeeId = id;
-            Department = department;
+            // Solo se ejecuta si el atributo está presente
+            method.Invoke(empleado, [logger]);
         }
-    }
+        logMessages.AppendLine($"hrMessage: {hrMessage}");
 
-    // Atributo para marcar un método como de recursos humanos
-    [AttributeUsage(AttributeTargets.Method)]
-    public class HrMethodAttribute : Attribute
-    {
-    }
+        // Se registran todos los mensajes acumulados en un solo log
+        logger.LogInformation(logMessages.ToString());
 
-    // Clase de empleado con atributos modificados y nuevos
-    [Employee("EMP-001", "Desarrollo")]
-    public class Empleado
-    {
-        [Required]
-        [StringLength(100)]
-        public string NombreCompleto { get; set; }
-
-        [HrMethod]
-        public void PerformHrReview()
-        {
-            Console.WriteLine("Revisión de RH realizada para el empleado.");
-        }
-    }
-
-    public static class AttributesDemo
-    {
-        public static object DemoAttributes(ILogger logger)
-        {
-            var type = typeof(Empleado);
-
-            var employeeAttr = Attribute.GetCustomAttribute(type, typeof(EmployeeAttribute)) as EmployeeAttribute;
-            var employeeMessage = employeeAttr != null ? $"ID: {employeeAttr.EmployeeId}, Depto: {employeeAttr.Department}" : "Sin Employee attribute";
-
-            var stringLengthAttr = Attribute.GetCustomAttribute(type.GetProperty("NombreCompleto"), typeof(StringLengthAttribute)) as StringLengthAttribute;
-            var stringLengthMessage = stringLengthAttr != null ? $"StringLength de NombreCompleto: {stringLengthAttr.MaximumLength}" : "Sin StringLength attribute";
-
-            var method = type.GetMethod("PerformHrReview");
-            var hrMethodAttr = Attribute.GetCustomAttribute(method, typeof(HrMethodAttribute)) as HrMethodAttribute;
-
-            if (hrMethodAttr != null) method.Invoke(Activator.CreateInstance(type), null);
-            var hrMessage = hrMethodAttr != null ? "PerformHrReview marcado y ejecutado." : "PerformHrReview no marcado.";
-
-            logger.LogInformation(employeeMessage);
-            logger.LogInformation(stringLengthMessage);
-            logger.LogInformation(hrMessage);
-
-            return new { employeeMessage, stringLengthMessage, hrMessage };
-        }
+        // Se devuelve la misma cadena de mensajes como resultado
+        return logMessages.ToString();
     }
 }
