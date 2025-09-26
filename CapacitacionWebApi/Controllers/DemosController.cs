@@ -1,0 +1,24 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
+namespace CapacitacionWebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class DemosController : ControllerBase
+    {
+        private readonly ILogger<DemosController> _logger;
+
+        public DemosController(ILogger<DemosController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpGet("lambdas")]
+        public IActionResult GetLambdas()
+        {
+            var result = LambdasDemo.DemoLambdas(_logger);
+            return Ok(result);
+        }
+    }
+}
