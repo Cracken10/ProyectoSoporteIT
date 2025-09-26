@@ -9,14 +9,37 @@ namespace CapacitacionWebApi
         // Lambdas
         public static object DemoLambdas(ILogger logger)
         {
-            Action voidLambda = () => logger.LogInformation("Void lambda ejecutada");
+            logger.LogInformation("Inicio de DemoLambdas.");
+            var messages = new List<string>();
+
+            // Lambda que no devuelve un valor 
+            Action voidLambda = () =>
+            {
+                var msg = "Void lambda ejecutada";
+                logger.LogInformation(msg);
+                messages.Add(msg);
+            };
             voidLambda();
 
-            Func<dynamic> returnLambda = () => new { Prop = "Valor" };
+            // Lambda que devuelve un valor 
+            Func<dynamic> returnLambda = () =>
+            {
+                var result = new { Prop = "Valor" };
+                var msg = $"Lambda retorno: {result.Prop}";
+                logger.LogInformation(msg);
+                messages.Add(msg);
+                return result;
+            };
             var resultado = returnLambda();
-            logger.LogInformation($"Lambda retorno: {resultado.Prop}");
 
-            return new { Message = "Lambdas ejecutadas", Prop = resultado.Prop };
+            logger.LogInformation("Fin de DemoLambdas.");
+
+            return new
+            {
+                Message = "Lambdas ejecutadas",
+                Prop = resultado.Prop,
+                LogMessages = messages
+            };
         }
 
         public static object DemoAction(ILogger logger)
@@ -71,3 +94,4 @@ namespace CapacitacionWebApi
         }
     }
 }
+
