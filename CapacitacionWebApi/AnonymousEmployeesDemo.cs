@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using System.Data; // Se agrega el using para DataTable
 
 namespace CapacitacionWebApi
 {
@@ -95,16 +96,44 @@ namespace CapacitacionWebApi
                 enumerableSelectList.Add(nombre);
             }
 
+            // Ejemplo Datatable
+            DataTable empleadosTable = new DataTable("Empleados");
+
+            empleadosTable.Columns.Add("Id", typeof(int));
+            empleadosTable.Columns.Add("Nombre", typeof(string));
+            empleadosTable.Columns.Add("Departamento", typeof(string));
+            empleadosTable.Columns.Add("Salario", typeof(decimal));
+
+            empleadosTable.Rows.Add(1, "Ana Gómez", "IT", 62000.00m);
+            empleadosTable.Rows.Add(2, "Luis Torres", "Ventas", 58000.75m);
+            empleadosTable.Rows.Add(3, "Marta Ruiz", "Marketing", 59500.25m);
+            empleadosTable.Rows.Add(4, "Pedro García", "IT", 65000.00m);
+            empleadosTable.Rows.Add(5, "Juan Pérez", "Recursos Humanos", 55000.50m);
+
+            logger.LogInformation("\n Ejemplo de DataTable Iteracion");
+            var datatableList = new List<object>();
+            foreach (DataRow row in empleadosTable.Rows)
+            {
+                int id = (int)row["Id"];
+                string nombre = (string)row["Nombre"];
+                string departamento = row.Field<string>("Departamento");
+                decimal salario = (decimal)row["Salario"];
+
+                logger.LogInformation($"ID: {id}, Nombre: {nombre}, Depto: {departamento}, Salario: {salario:C}");
+                datatableList.Add(new { Id = id, Nombre = nombre, Departamento = departamento, Salario = salario });
+            }
+
             return new
             {
-                Message = "AnonymousEmployees ejecutado con ejemplos de tipos anónimos, enumerados, IQueryable e IEnumerable",
+                Message = "AnonymousEmployees ejecutado con ejemplos de tipos anónimos, enumerados, IQueryable, IEnumerable y DataTable",
                 EmpleadoAnonimo = empleadoAnonimo,
                 ListaEmpleados = empleadosList,
                 EjemploEnum = departamentoEmpleado.ToString(),
                 ListaEmpleadosConEnum = empleadosConEnum,
                 EmpleadosITQueryable = queryableList,
                 EmpleadosFiltradosEnumerable = enumerableWhereList,
-                NombresEmpleadosEnumerable = enumerableSelectList
+                NombresEmpleadosEnumerable = enumerableSelectList,
+                DatosDataTable = datatableList 
             };
         }
     }
