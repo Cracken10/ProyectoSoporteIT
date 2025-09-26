@@ -35,11 +35,11 @@ namespace CapacitacionWebApi.Controllers
             return Ok(result);
         }
 
-   //     [HttpGet("delegate")]
-    //    public IActionResult GetDelegate()
-     //   {
-   //         var result = LambdasDemo.DemoDelegate(_logger);
-  //         return Ok(result);
-    //    }
+      [HttpGet("delegate")]
+        public IActionResult GetDelegate()
+       {
+          var result = LambdasDemo.DemoDelegate(_logger);
+        return Ok(result);
+      }
     }
 }

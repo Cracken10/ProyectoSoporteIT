@@ -134,6 +134,62 @@ namespace CapacitacionWebApi
                     MetodoFuncResult = resMetodoFunc
                 }
             };
-        } 
+        }
+
+        public delegate void MiDelegate(string mensaje);
+
+        public static class DelegadosDemo
+        {
+            public static object DemoDelegate(ILogger logger)
+            {
+                var messages = new List<string>();
+
+                // 1. Asignar un lambda directamente al delegado personalizado
+                MiDelegate del = (m) =>
+                {
+                    var msg = $"Delegate (lambda): {m}";
+                    logger.LogInformation(msg);
+                    messages.Add(msg);
+                };
+
+                // 2. Crear una instancia de Action con la misma firma
+                Action<string> accion = (m) =>
+                {
+                    var msg = $"Action en delegate: {m}";
+                    logger.LogInformation(msg);
+                    messages.Add(msg);
+                };
+
+                // 3. Crear una instancia de Func y convertirla a Action
+                Func<string, string> func = (m) =>
+                {
+                    return $"Func (convertido): {m}";
+                };
+
+                // Se crea un Action que encapsula la llamada al Func
+                Action<string> accionDesdeFunc = (m) =>
+                {
+                    var msg = func(m);
+                    logger.LogInformation(msg);
+                    messages.Add(msg);
+                };
+
+                // Mezcla.
+                del += accion.Invoke; // Añadir la Action
+                del += accionDesdeFunc.Invoke; // Añadir la Action que encapsula el Func
+
+                // Invocar el delegado, que llamará a los tres métodos en orden
+                del("Resultado");
+
+                return new
+                {
+                    Message = "Delegate, Func y Action ejecutados",
+                    LogMessages = messages
+                };
+            }
+        }
+    }
+
+}
     } 
 }
