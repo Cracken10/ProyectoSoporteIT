@@ -1,18 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
 using System.Collections.Generic;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace CapacitacionWebApi
 {
-    // Nuevo tipo enumerado para los departamentos
-    public enum Departamento
-    {
-        IT,
-        Ventas,
-        Marketing,
-        RecursosHumanos,
-        Desconocido
-    }
 
     public static class AnonymousEmployeesDemo
     {
@@ -50,28 +42,41 @@ namespace CapacitacionWebApi
             logger.LogInformation("\n--- Ejemplo de un tipo enumerado individual ---");
             logger.LogInformation($"El departamento seleccionado es: {departamentoEmpleado}");
 
-            // Para mantener la demostración limpia, se crea una clase simple aquí.
+            // Ejemplo de una lista con tipo enumerado
             var empleadosConEnum = new List<object>
             {
                 new { Id = "EMP-006", Nombre = "Carlos Solis", Departamento = Departamento.Marketing },
                 new { Id = "EMP-007", Nombre = "Diana Ramos", Departamento = Departamento.Ventas },
                 new { Id = "EMP-008", Nombre = "Eduardo Mena", Departamento = Departamento.IT }
             };
-
-            logger.LogInformation("\n--- Ejemplo de una lista con tipo enumerado ---");
+            logger.LogInformation("\n- Ejemplo de una lista con tipo enumerado -");
             foreach (dynamic empleado in empleadosConEnum)
             {
-                // Al usar 'dynamic', se accede a las propiedades del tipo anónimo
                 logger.LogInformation($"ID: {empleado.Id}, Nombre: {empleado.Nombre}, Depto (enum): {empleado.Departamento}");
+            }
+
+            // Ejemplo de IQueryable 
+            var empleadosQueryable = listaEmpleadosAnonimos.AsQueryable();
+            var empleadosITQueryable = empleadosQueryable
+                .Where(e => e.Departamento == "IT" && e.Salario > 60000)
+                .Select(e => new { e.Nombre, e.Salario })
+                .ToList();
+            logger.LogInformation("\n--- Ejemplo de IQueryable para empleados filtrados ---");
+            var queryableList = new List<object>();
+            foreach (var empleado in empleadosITQueryable)
+            {
+                logger.LogInformation($"Empleado de IT (IQueryable): {empleado.Nombre}, Salario: {empleado.Salario:C}");
+                queryableList.Add(new { empleado.Nombre, empleado.Salario });
             }
 
             return new
             {
-                Message = "AnonymousEmployees ejecutado con ejemplos de tipos enumerados",
+                Message = "AnonymousEmployees ejecutado con ejemplos de tipos anónimos, enumerados e IQueryable",
                 EmpleadoAnonimo = empleadoAnonimo,
                 ListaEmpleados = empleadosList,
                 EjemploEnum = departamentoEmpleado.ToString(),
-                ListaEmpleadosConEnum = empleadosConEnum
+                ListaEmpleadosConEnum = empleadosConEnum,
+                EmpleadosITQueryable = queryableList
             };
         }
     }
