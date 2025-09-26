@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CapacitacionWebApi
 {
-    //Prueba
+    //Prueba 
     public static class LambdasDemo
     {
         public static object DemoLambdas(ILogger logger)
