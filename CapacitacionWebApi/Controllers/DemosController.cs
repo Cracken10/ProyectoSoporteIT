@@ -55,5 +55,12 @@ namespace CapacitacionWebApi.Controllers
             var result = AttributesDemo.DemoAttributes(_logger);
             return Ok(result);
         }
+
+        [HttpGet("anonymousemployees")]
+        public IActionResult GetAnonymousEmployees()
+        {
+            var result = AnonymousEmployeesDemo.DemoAnonymousEmployees(_logger);
+            return Ok(result);
+        }
     }
 }
