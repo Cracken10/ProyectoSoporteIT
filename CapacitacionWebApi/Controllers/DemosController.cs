@@ -51,7 +51,7 @@ namespace CapacitacionWebApi.Controllers
 
         [HttpGet("attributes")]
         public IActionResult GetAttributes()
-        {
+        {//
             var result = AttributesDemo.DemoAttributes(_logger);
             return Ok(result);
         }
