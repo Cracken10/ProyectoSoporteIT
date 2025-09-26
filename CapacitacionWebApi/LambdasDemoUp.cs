@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic; // **Importación necesaria para usar List<T>**
+using System.Collections.Generic; // Importación necesaria para usar List<T>
 using Microsoft.Extensions.Logging;
 
 namespace CapacitacionWebApi
@@ -92,6 +92,48 @@ namespace CapacitacionWebApi
                 LogMessages = messages
             };
         }
-    }
-}
 
+
+        public static object DemoFunc(ILogger logger)
+        {
+            Func<int, string, bool, double, string> func4 = (i, s, b, d) => $"Func4: {i}, {s}, {b}, {d}";
+            Func<int, string, bool, int> func3 = (i, s, b) => i;
+            Func<int, string, string> func2 = (i, s) => s;
+            Func<int, string> func1 = i => $"Func1: {i}";
+
+            var resFunc4 = func4(1, "test", true, 2.0);
+            logger.LogInformation(resFunc4);
+
+            var resFunc3 = func3(1, "test", true);
+            logger.LogInformation($"Resultado Func3: {resFunc3}"); 
+            var resFunc2 = func2(1, "test");
+            logger.LogInformation(resFunc2);
+
+            var resFunc1 = func1(1);
+            logger.LogInformation(resFunc1);
+
+            // Método que recibe una Func y la ejecuta
+            string MetodoFunc(Func<int, string> param)
+            {
+                var res = param(5);
+                logger.LogInformation($"MetodoFunc ejecutado con resultado: {res}");
+                return res;
+            }
+
+            var resMetodoFunc = MetodoFunc(func1);
+
+            return new
+            {
+                Message = "Func ejecutada",
+                Results = new
+                {
+                    Func4 = resFunc4,
+                    Func3 = resFunc3,
+                    Func2 = resFunc2,
+                    Func1 = resFunc1,
+                    MetodoFuncResult = resMetodoFunc
+                }
+            };
+        } 
+    } 
+}
