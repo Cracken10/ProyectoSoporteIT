@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ProyectoSoporteIT": {
+      "commandName": "Project",
+      "nativeDebugging": false,
+      "jsWebView2Debugging": false,
+      "hotReloadEnabled": true
+    }
+  }
+}

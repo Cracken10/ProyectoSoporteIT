@@ -82,6 +82,6 @@ namespace ProyectoSoporteIT
 
             // Mostrar mensaje en MessageBox
             MessageBox.Show("Atributos ejecutados.");
-        }
+        }   
     }
 }
