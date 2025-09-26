@@ -20,5 +20,12 @@ namespace CapacitacionWebApi.Controllers
             var result = LambdasDemo.DemoLambdas(_logger);
             return Ok(result);
         }
+
+        [HttpGet("action")]
+        public IActionResult GetAction()
+        {
+            var result = LambdasDemo.DemoAction(_logger);
+            return Ok(result);
+        }
     }
 }
