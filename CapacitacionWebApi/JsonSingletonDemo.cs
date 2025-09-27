@@ -1,70 +1,74 @@
-﻿// Archivo: JsonSingletonDemo.cs
-
-using System;
+﻿using System;
+using System.Reflection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace CapacitacionWebApi
 {
-    // Clase Singleton para la configuración de empleados
-    public class JsonSingletonDemo
+    public class Singleton
     {
-        private static JsonSingletonDemo instance;
-
-        // Propiedad estática para obtener la única instancia
-        public static JsonSingletonDemo Instance
+        private static Singleton instance;
+        public static Singleton Instance
         {
             get
             {
                 if (instance == null)
-                {
-                    instance = new JsonSingletonDemo();
-                }
+                    instance = new Singleton();
                 return instance;
             }
         }
 
-        // Propiedades relevantes para la configuración de empleados
-        public string NombreEmpresa { get; set; } = "Mi Empresa SA";
-        public string JefeActivo { get; set; } = "Sin asignar";
+        public string Nombre { get; set; } = "Ejemplo Singleton";
+        public int Valor { get; set; } = 100;
 
-        // Constructor privado para prevenir la instanciación externa
-        private JsonSingletonDemo() { }
+        private Singleton() { }
+    }
 
-        // Método de demostración para serializar y deserializar
+    public class ActorClass
+    {
+        private string actor = "Privado Inicial";
+    }
+
+    public static class JsonSingletonDemo
+    {
         public static object DemoJson(ILogger logger)
         {
-            // Acceder al Singleton de configuración de empleados
-            var configuracion = JsonSingletonDemo.Instance;
-            configuracion.NombreEmpresa = "Empresa X";
-            configuracion.JefeActivo = "Juan Gerente";
-            logger.LogInformation("--- Ejemplo de Singleton con datos de empleados ---");
-            logger.LogInformation($"Configuración inicial - Empresa: {configuracion.NombreEmpresa}, Jefe: {configuracion.JefeActivo}");
-
-            // Serializar el Singleton a JSON para simular guardado
-            string json = JsonConvert.SerializeObject(configuracion);
+            var singleton = Singleton.Instance;
+            singleton.Nombre = "Singleton Serializado";
+            singleton.Valor = 200;
+            string json = JsonConvert.SerializeObject(singleton);
             logger.LogInformation($"JSON serializado: {json}");
-
-            // Deserializar el JSON de vuelta a un objeto
-            var deserializedConfig = JsonConvert.DeserializeObject<JsonSingletonDemo>(json);
-            logger.LogInformation($"JSON deserializado (nueva instancia) - Empresa: {deserializedConfig.NombreEmpresa}, Jefe: {deserializedConfig.JefeActivo}");
-
-            // Modificar el Singleton para demostrar que es la misma instancia en memoria
-            configuracion.NombreEmpresa = "Empresa Modificada";
-            configuracion.JefeActivo = "Ana Supervisora";
-            logger.LogInformation($"Singleton modificado en memoria - Empresa: {configuracion.NombreEmpresa}, Jefe: {configuracion.JefeActivo}");
-
-            // Volver a acceder al Singleton para verificar la persistencia del cambio en memoria
-            var mismaInstancia = JsonSingletonDemo.Instance;
-            logger.LogInformation($"Acceso posterior a la misma instancia Singleton - Empresa: {mismaInstancia.NombreEmpresa}, Jefe: {mismaInstancia.JefeActivo}");
-
+            var deserialized = JsonConvert.DeserializeObject<Singleton>(json);
+            logger.LogInformation($"JSON deserializado - Nombre: {deserialized.Nombre}, Valor: {deserialized.Valor}");
+            singleton.Nombre = "Singleton Modificado";
+            singleton.Valor = 300;
+            logger.LogInformation($"Singleton modificado - Nombre: {singleton.Nombre}, Valor: {singleton.Valor}");
             return new
             {
-                Message = "JsonSingletonEmpleadoDemo ejecutado, serializando y deserializando la configuración de empleados.",
-                ConfiguracionInicial = new { configuracion.NombreEmpresa, configuracion.JefeActivo },
+                Message = "JsonSingleton ejecutado",
                 JsonSerializado = json,
-                Deserializado = new { deserializedConfig.NombreEmpresa, deserializedConfig.JefeActivo },
-                SingletonModificado = new { mismaInstancia.NombreEmpresa, mismaInstancia.JefeActivo }
+                Deserializado = new { deserialized.Nombre, deserialized.Valor },
+                SingletonModificado = new { singleton.Nombre, singleton.Valor }
+            };
+        }
+
+        public static object DemoReflection(ILogger logger)
+        {
+            var actorObj = new ActorClass();
+            var field = typeof(ActorClass).GetField("actor", BindingFlags.NonPublic | BindingFlags.Instance);
+            string initialValue = field != null ? (string)field.GetValue(actorObj) : "No se encontró el campo 'actor'";
+            logger.LogInformation($"Valor inicial del campo privado 'actor': {initialValue}");
+            if (field != null)
+            {
+                field.SetValue(actorObj, "Privado Modificado");
+                string modifiedValue = (string)field.GetValue(actorObj);
+                logger.LogInformation($"Valor modificado del campo privado 'actor': {modifiedValue}");
+            }
+            return new
+            {
+                Message = "Reflexión ejecutada",
+                InitialActor = initialValue,
+                ModifiedActor = field != null ? "Privado Modificado" : "No modificado"
             };
         }
     }
