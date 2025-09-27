@@ -75,5 +75,11 @@ namespace CapacitacionWebApi.Controllers
             var result = JsonSingletonDemo.DemoReflection(_logger);
             return Ok(result);
         }
+        [HttpGet("extensionmethods")]
+        public IActionResult GetExtensionMethods()
+        {
+            var result = JsonSingletonDemo.DemostradorDeExtensiones.RunDemo(_logger);
+            return Ok(result);
+        }
     }
 }
