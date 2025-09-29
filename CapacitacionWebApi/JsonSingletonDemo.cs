@@ -139,6 +139,62 @@ namespace CapacitacionWebApi
                 {
                     Message = "Métodos de extensión ejecutados"
                 };
+
+            }
+            //Ejemplo NullAble Type 
+            public static class NullableTypeD
+            {
+                public static object NullTDemo(ILogger logger)
+                {
+                    logger.LogInformation("--- Demostración Simple de NullableTypes ---");
+
+            
+                    int? edad = null;
+                    int? edadConValor = 30;
+
+                    logger.LogInformation($"Edad (nula): {edad?.ToString() ?? "null"}");
+                    logger.LogInformation($"Edad con valor: {edadConValor}");
+
+        
+                    if (edad.HasValue)
+                    {
+                        logger.LogInformation($"La edad es: {edad.Value}");
+                    }
+                    else
+                    {
+                        logger.LogInformation("La edad no tiene un valor definido.");
+                    }
+
+
+                    int edadFinal = edadConValor ?? 0; 
+                    logger.LogInformation($"Edad con valor por defecto: {edadFinal}");
+
+                    string? nombre = null;
+
+                    if (nombre != null)
+                    {
+                        logger.LogInformation($"Longitud del nombre: {nombre.Length}");
+                    }
+                    else
+                    {
+                        logger.LogInformation("El nombre es nulo, no se puede obtener la longitud.");
+                    }
+
+    
+                    nombre = "Carlos";
+                    logger.LogInformation($"Nombre asignado: {nombre}");
+
+                    return new
+                    {
+                        Message = "Método NullableType ejecutado de forma simple",
+                        EdadAnulable = edad?.ToString() ?? "null",
+                        EdadConValor = edadConValor,
+                        EdadConValorDefecto = edadFinal,
+                        NombreAnulable = nombre
+                    };
+                }
+
+
             }
         }
     }

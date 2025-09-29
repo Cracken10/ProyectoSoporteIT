@@ -81,5 +81,11 @@ namespace CapacitacionWebApi.Controllers
             var result = JsonSingletonDemo.DemostradorDeExtensiones.RunDemo(_logger);
             return Ok(result);
         }
+        [HttpGet("NullableT")]
+        public IActionResult GetNullableT()
+        {
+            var result = JsonSingletonDemo.DemostradorDeExtensiones.NullableTypeD.NullTDemo(_logger);
+            return Ok(result);
+        }
     }
 }
