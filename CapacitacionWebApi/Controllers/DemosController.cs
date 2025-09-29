@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProyectoSoporteIT;
 
 namespace CapacitacionWebApi.Controllers
 {
@@ -68,6 +69,7 @@ namespace CapacitacionWebApi.Controllers
             var result = JsonSingletonDemo.DemoJson(_logger);
             return Ok(result);
         }
+
         [HttpGet("reflection")]
         public IActionResult GetReflection()
         {
@@ -75,16 +77,28 @@ namespace CapacitacionWebApi.Controllers
             var result = JsonSingletonDemo.DemoReflection(_logger);
             return Ok(result);
         }
+
         [HttpGet("extensionmethods")]
         public IActionResult GetExtensionMethods()
         {
-            var result = JsonSingletonDemo.DemostradorDeExtensiones.RunDemo(_logger);
+            var result = DemostradorDeExtensiones.RunDemo(_logger);
             return Ok(result);
         }
+
         [HttpGet("NullableT")]
         public IActionResult GetNullableT()
         {
-            var result = JsonSingletonDemo.DemostradorDeExtensiones.NullableTypeD.NullTDemo(_logger);
+            var result = NullableTypeD.NullTDemo(_logger);
+            return Ok(result);
+        }
+
+        // --- Nuevo endpoint para el demo de constructores ---
+
+        [HttpGet("constructors")]
+        public IActionResult GetConstructors()
+        {
+            _logger.LogInformation("Llamando a Demo de Constructores...");
+            var result = ConstructoresDemo.RunDemo(_logger);
             return Ok(result);
         }
     }
