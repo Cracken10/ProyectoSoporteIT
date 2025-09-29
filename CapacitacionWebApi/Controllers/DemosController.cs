@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProyectoSoporteIT;
+using System.Runtime.CompilerServices;
 
 namespace CapacitacionWebApi.Controllers
 {
@@ -100,6 +101,29 @@ namespace CapacitacionWebApi.Controllers
             _logger.LogInformation("Llamando a Demo de Constructores...");
             var result = ConstructoresDemo.RunDemo(_logger);
             return Ok(result);
+        }
+        [HttpGet("aggressive-inlining")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public IActionResult AggressiveInlining()
+        {
+            _logger.LogInformation("Ejecutando AggressiveInlining");
+            return Ok(new { Message = "Método con AggressiveInlining ejecutado" });
+        }
+
+        [HttpGet("no-inlining")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public IActionResult NoInlining()
+        {
+            _logger.LogInformation("Ejecutando NoInlining");
+            return Ok(new { Message = "Método con NoInlining ejecutado" });
+        }
+
+        [HttpGet("synchronized")]
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public IActionResult Synchronized()
+        {
+            _logger.LogInformation("Ejecutando Synchronized");
+            return Ok(new { Message = "Método con Synchronized ejecutado" });
         }
     }
 }

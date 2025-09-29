@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using System.Runtime.CompilerServices;
 
 namespace ProyectoSoporteIT
 {
@@ -266,5 +267,29 @@ namespace ProyectoSoporteIT
 
             return new { Message = "Demostración de constructores y encadenamiento ejecutada" };
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public static void DemoMethodImpl(ILogger logger)
+        {
+            logger.LogInformation("--- Demostración de MethodImpl Synchronized ---");
+            List<int> numeros = new List<int> { 1, 2, 3, 4, 5 };
+            logger.LogInformation("Procesando lista con foreach estándar (Synchronized):");
+            foreach (var numero in numeros)
+            {
+                logger.LogInformation($"Procesando número: {numero} (Thread ID: {Thread.CurrentThread.ManagedThreadId})");
+                Thread.Sleep(500); // Simula trabajo
+            }
+
+            logger.LogInformation("Procesando lista con Parallel.ForEach:");
+            Parallel.ForEach(numeros, numero =>
+            {
+                logger.LogInformation($"Procesando número: {numero} (Thread ID: {Thread.CurrentThread.ManagedThreadId})");
+                Thread.Sleep(500); 
+            });
+
+            logger.LogInformation("Fin de DemoMethodImpl");
+        }
     }
 }
+
+    
+
